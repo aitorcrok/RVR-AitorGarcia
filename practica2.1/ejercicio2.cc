@@ -64,13 +64,13 @@ int main(int argc, char** argv)
             return -1;
         }
 
-        //command[bytes] = '\0';
-        std::cout << "llegó\n";
+        command[bytes] = '\0';
+
         getnameinfo(&cliente, clientelen, host, NI_MAXHOST, serv, NI_MAXSERV, NI_NUMERICHOST | NI_NUMERICSERV);
 
         std::cout << bytes << " bytes de " << host << ":" << serv << std::endl;
 
-        if(bytes > 2)
+        if(command[1] != '\0')
         {
             std::cout << "Comando no soportado " << command;
         }
@@ -119,8 +119,6 @@ int main(int argc, char** argv)
     }
 
     close(sd);
-
-    std::cout << "Saliendo...\n";
 
     return 0;
 }

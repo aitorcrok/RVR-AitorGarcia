@@ -5,7 +5,6 @@
 #include <string.h>
 
 #include <iostream>
-#include <cstdlib>
 /*
  *  ./time_client <dir.> <puerto> <comando>
  */
@@ -17,11 +16,11 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    struct sockaddr_in* servaddr;
+    struct sockaddr* servaddr;
     struct addrinfo hints;
     struct addrinfo* res;
 
-    memset(&servaddr, 0, sizeof(struct sockaddr_in));
+    memset(&servaddr, 0, sizeof(struct sockaddr));
     memset((void*) &hints, 0, sizeof(struct addrinfo));
 
     hints.ai_family = AF_INET;
@@ -34,9 +33,7 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    // servaddr.sin_family = AF_INET;
-    // servaddr.sin_port = atoi(argv[2]);
-    servaddr = (struct sockaddr_in*) res->ai_addr;
+    servaddr = res->ai_addr;
        
     int sd = socket(AF_INET, SOCK_DGRAM, 0);
 
@@ -46,26 +43,21 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    //bind(sd, res->ai_addr, res->ai_addrlen);
-
-    //freeaddrinfo(res);
+    freeaddrinfo(res);
 
     char buffer[12];
     socklen_t servlen = sizeof(struct sockaddr);
 
     char* comm = argv[3];
     
-    sendto(sd, comm, sizeof(comm), 0, (const struct sockaddr*) &servaddr, servlen);
+    sendto(sd, comm, sizeof(comm), 0, servaddr, servlen);
 
-    std::cout << "sent" << std::endl;
-
-    int bytes = recvfrom(sd, (void *) &buffer, 12, 0, (struct sockaddr*) &servaddr, &servlen);
-
-    std::cout << "received" << std::endl;
-
-    buffer[bytes] = '\0';
-
-    std::cout << buffer << std::endl;
+    if(comm[0] == 't' || comm[0] == 'd')
+    {
+        int bytes = recvfrom(sd, (void *) &buffer, 12, 0, servaddr, &servlen);
+        buffer[bytes] = '\0';
+        std::cout << buffer << std::endl;
+    }
 
     close(sd);
 
