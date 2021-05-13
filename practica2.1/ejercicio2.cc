@@ -65,7 +65,7 @@ int main(int argc, char** argv)
         }
 
         //command[bytes] = '\0';
-
+        std::cout << "llegó\n";
         getnameinfo(&cliente, clientelen, host, NI_MAXHOST, serv, NI_MAXSERV, NI_NUMERICHOST | NI_NUMERICSERV);
 
         std::cout << bytes << " bytes de " << host << ":" << serv << std::endl;
@@ -119,6 +119,8 @@ int main(int argc, char** argv)
     }
 
     close(sd);
+
+    std::cout << "Saliendo...\n";
 
     return 0;
 }
