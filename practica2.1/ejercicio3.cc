@@ -52,11 +52,14 @@ int main(int argc, char** argv)
     
     sendto(sd, comm, sizeof(comm), 0, servaddr, servlen);
 
-    if(comm[0] == 't' || comm[0] == 'd')
+    if(comm[1] == '\0')
     {
-        int bytes = recvfrom(sd, (void *) &buffer, 12, 0, servaddr, &servlen);
-        buffer[bytes] = '\0';
-        std::cout << buffer << std::endl;
+        if(comm[0] == 't' || comm[0] == 'd')
+        {
+            int bytes = recvfrom(sd, (void *) &buffer, 12, 0, servaddr, &servlen);
+            buffer[bytes] = '\0';
+            std::cout << buffer << std::endl;
+        }
     }
 
     close(sd);

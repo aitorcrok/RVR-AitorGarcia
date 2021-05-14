@@ -72,7 +72,7 @@ int main(int argc, char** argv)
 
         if(command[1] != '\0')
         {
-            std::cout << "Comando no soportado " << command;
+            std::cout << "Comando no soportado " << command << std::endl;
         }
         else if(command[0] == 'q')
         {
@@ -112,7 +112,7 @@ int main(int argc, char** argv)
             }
             else
             {
-                std::cout << "Comando no soportado " << command;
+                std::cout << "Comando no soportado " << command << std::endl;
             }
         }
 
