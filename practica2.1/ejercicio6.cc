@@ -129,9 +129,7 @@ int main(int argc, char** argv)
     {
         pool[i] = std::thread([&](){
             Thread t(sd);
-            while(true){
-               t.mensaje();
-            }
+            t.mensaje();
         });
     }
 
